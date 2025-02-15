@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="admin-toolbar">
+    <ion-item class="admin-info" lines="none">
+      <ion-avatar slot="start"> </ion-avatar>
+      <ion-label>Felicity French (Agent) </ion-label>
+    </ion-item>
+
+    <div class="option-btn-wrapper">
+      <ion-button class="theme-button btn" shape="round">Profile</ion-button>
+      <ion-button class="theme-button btn" shape="round">Clients</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="admin-dashboard">
+  <ion-split-pane contentId="person-content" [when]="true">
+    <ion-menu contentId="person-content" menuId="person-content" side="start" type="push">
+      <ion-content>
+        <ion-content>
+          <ion-list class="person-list">
+            <ng-container *ngFor="let client of list; let i = index">
+              <ion-item lines="none" class="person-item" [ngClass]="{ selected: i === 0 }">
+                <ion-avatar slot="start"> </ion-avatar>
+                <ion-label> {{ client.name }} </ion-label>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-content>
+      </ion-content>
+    </ion-menu>
+    <ion-content id="person-content" class="person-content">
+      <div class="assign-btns">
+        <ion-button class="theme-button btn" shape="round">Assign to new agent</ion-button>
+        <ion-button class="theme-button btn" shape="round">
+          Cancel Agent/Client Connection
+        </ion-button>
+      </div>
+
+      <div class="assign-card">
+        <div class="header">Re-assign Client <span>Elle Smith</span></div>
+        <div class="content">
+          <div class="agent-detail-wrapper">
+            <div class="agent-details">
+              <div>Assign to which agent?</div>
+              TRAVIS COLE - ESTATE LAW
+              <div class="mt-15">Notify client of re-assignment?</div>
+              <div>Message to client</div>
+            </div>
+            <ion-icon name="checkbox-outline"></ion-icon>
+          </div>
+          <div class="message">
+            Hi Elle,
+            <br />
+            <br />
+            As discussed we are reassigned you to Travis Bell in our Estate Law division. Please
+            don’t hesitate to contact us if you have any questions.
+            <br />
+            <br />
+            Best Regards <br />
+            Julia Blake <br />
+            Partner - ABC Legal. <br />
+          </div>
+        </div>
+        <div class="process-btns">
+          <ion-button color="secondary" fill="outline" class="theme-button cancel">
+            Cancel
+          </ion-button>
+          <ion-button class="theme-button"> Add Client </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ion-split-pane>
+</ion-content>

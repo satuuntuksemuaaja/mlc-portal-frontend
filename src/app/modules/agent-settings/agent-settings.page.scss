@@ -1,0 +1,47 @@
+.settings-page {
+  .content {
+    max-width: 600px;
+  }
+  .header {
+    border-bottom: 1px solid var(--ion-color-light-shade);
+    padding: 5px 0px 12px 0px;
+
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 120%;
+    color: var(--ion-color-dark);
+    &.photo {
+      padding-top: 24px;
+    }
+  }
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 35px;
+  ion-button {
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
+}
+
+.agent-avatar {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  ion-avatar {
+    height: 80px;
+    width: 80px;
+  }
+  ion-button {
+    margin-left: 12px;
+    &.sm {
+      min-height: 28px !important;
+      height: 28px !important;
+    }
+  }
+}

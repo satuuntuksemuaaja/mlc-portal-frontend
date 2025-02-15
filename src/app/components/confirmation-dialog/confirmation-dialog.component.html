@@ -1,0 +1,17 @@
+<div class="alert-wrapper">
+  <ion-button class="close-btn" (click)="close()">
+    <ion-icon slot="icon-only" src="assets/icons/close.svg"></ion-icon>
+  </ion-button>
+  <div class="detail-section">
+    <ion-item-divider>
+      <div class="title">{{ title }}</div>
+    </ion-item-divider>
+    <div class="desc" [innerHTML]="message"></div>
+  </div>
+  <div class="btn-wrapper">
+    <ion-button (click)="close()" class="theme-button" fill="outline" color="secondary">
+      Cancel
+    </ion-button>
+    <ion-button (click)="confirm()" class="theme-button" color="primary"> OK </ion-button>
+  </div>
+</div>

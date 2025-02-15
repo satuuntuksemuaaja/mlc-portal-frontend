@@ -1,0 +1,47 @@
+<mlc-loading *ngIf="loading" text="Loading" class="content"></mlc-loading>
+<ion-content *ngIf="!loading">
+  <div class="content">
+    <div class="add-client-card popup" style="min-height: auto">
+      <div class="header">Assign Agent to {{ client.name }}</div>
+      <form
+        [formGroup]="assignAgentForm"
+        class="content"
+        style="justify-content: unset; margin-top: 10px"
+      >
+        <div class="form-wrapper" style="width: 80%; align-self: flex-start">
+          <ion-item>
+            <ion-label>Select Agent</ion-label>
+            <ion-select
+              [interfaceOptions]="customActionSheetOptions"
+              interface="alert"
+              placeholder="Select"
+              (ionChange)="getSelectedAgent($event)"
+              formControlName="agent"
+            >
+              <ion-select-option *ngFor="let agent of agents" [value]="agent.id"
+                >{{ agent.name }} - {{ agent.email }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </div>
+        <div style="margin-top: 45px; width: 100%; display: flex; justify-content: end">
+          <ion-button
+            color="secondary"
+            fill="outline"
+            class="theme-button cancel"
+            (click)="close()"
+          >
+            Cancel
+          </ion-button>
+          <ion-button
+            class="theme-button"
+            (click)="assignAgent()"
+            [disabled]="!assignAgentForm.valid"
+          >
+            OK
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

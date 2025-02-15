@@ -1,0 +1,49 @@
+<form [formGroup]="myForm" (ngSubmit)="submit()" [style.width.px]="width">
+  <div>
+    <div *ngFor="let Input of inputs">
+      <ion-item *ngIf="Input.type == 0">
+        <ion-label position="stacked">{{ Input.name }}</ion-label>
+        <ion-input [formControlName]="Input.fieldName" [readonly]="Input?.readOnly"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="Input.type == 5">
+        <ion-label position="stacked">{{ Input.name }}</ion-label>
+        <ion-input [formControlName]="Input.fieldName" [readonly]="Input.readOnly"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="Input.type == 4">
+        <ion-label>{{ Input.dropDownLabel }}</ion-label>
+        <ion-select
+          interface="alert"
+          [placeholder]="Input.dropDownLabel"
+          [formControlName]="Input.fieldName"
+          [selectedText]="Input.dropDownSelected"
+          (ionChange)="getCurrentValue($event)"
+        >
+          <ion-select-option *ngFor="let option of Input.dropDownData" [value]="option">{{
+            option
+          }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="Input.type == 3">
+        <ion-grid>
+          <ion-row style="display: flex">
+            <ion-item style="width: 47%">
+              <ion-label position="fixed">From</ion-label>
+              <ion-input [type]="'date'" [formControlName]="Input.fieldName"></ion-input>
+            </ion-item>
+            <ion-item class="to-drop-down">
+              <ion-label position="fixed">To</ion-label>
+              <ion-input [type]="'date'" [formControlName]="Input.fieldName2"></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+    <div class="button-position">
+      <ion-button class="archive-button archivePos" *ngIf="showArchive == true" (click)="archive()"
+        >ARCHIVE</ion-button
+      >
+      <ion-button class="cancel-button" fill="outline" (click)="cancel()">CANCEL</ion-button>
+      <ion-button color="primary" type="submit" [disabled]="!myForm.valid">SAVE</ion-button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+<ion-content>
+  <ion-split-pane class="client-list-panel" contentId="myfiles" [when]="true">
+    <ion-menu contentId="myfiles" menuId="myfiles">
+      <mlc-side-bar
+        (itemClick)="onSelectClient($event)"
+        [type]="'myclients'"
+        [clientList]="filteredClients"
+        [selectedClient]="selectedClient"
+        title="My Clients"
+        [isArchive]="isArchive"
+        (archiveChange)="setArchive($event)"
+        [showLoading]="loading"
+        (searchTextChange)="filter($event)"
+        (clearSearch)="clearFilter()"
+        [allowAdd]="false"
+      >
+      </mlc-side-bar>
+    </ion-menu>
+    <ion-content id="myfiles" #content [hidden]="loading">
+      <div class="client-content">
+        <mlc-client-header [client]="selectedClient" [displayTabs]="false"> </mlc-client-header>
+        <div class="files-wrapper">
+          <mlc-files [selectedClient]="selectedClient"></mlc-files>
+        </div>
+      </div>
+    </ion-content>
+  </ion-split-pane>
+</ion-content>

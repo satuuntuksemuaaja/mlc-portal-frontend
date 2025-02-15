@@ -1,0 +1,113 @@
+<ion-header mode="ios" class="ion-no-border client-header">
+  <ion-toolbar mode="ios">
+    <ion-item lines="none" class="header-item">
+      <ion-label class="label">{{ title }}</ion-label>
+      <ion-icon
+        *ngIf="allowAdd"
+        (click)="add.emit()"
+        name="person-add-outline"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+    <ion-searchbar
+      *ngIf="showSearch"
+      class="client-list-searchbar"
+      placeholder="Search"
+      [debounce]="250"
+      (ionChange)="handleChange($event)"
+      (ionCancel)="clearSearch.emit(true)"
+      (ionClear)="clearSearch.emit(true)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <mlc-loading *ngIf="showLoading" [minHeight]="0" [text]="'Loading'"></mlc-loading>
+  <ion-list class="client-list" [class.hidden]="showLoading">
+    <ng-container *ngIf="type === 'myclients'">
+      <ng-container *ngFor="let item of myClientList | keyvalue">
+        <ng-container *ngFor="let client of item.value; let i = index">
+          <ion-item
+            lines="none"
+            [class]="'client-item ' + (type === 'myclients' ? client.status : '')"
+            [ngClass]="{ selected: client?.id === selectedClient?.id }"
+            (click)="itemClick.emit(client)"
+          >
+            <!-- <ion-avatar slot="start">
+              <img src="assets/images/person-circle-outline.png" alt="" />
+            </ion-avatar> -->
+            <ion-label>
+              {{ client.name }}
+              <ng-container *ngIf="type === 'myclients'">
+                <p class="pending" *ngIf="client?.status !== 'active'">
+                  {{ getStatus(client?.status) }}
+                </p>
+              </ng-container>
+            </ion-label>
+            <!-- <ion-badge color="primary" *ngIf="client?.unreadChat > 0" mode="ios" slot="end">
+              {{ client?.unreadChat }}
+            </ion-badge> -->
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="type === 'myagents' || type === 'agent-clients'">
+      <ng-container *ngFor="let item of clientResults">
+        <ion-item
+          lines="none"
+          [ngClass]="{ selected: item.id === selectedId }"
+          [class]="
+            'client-item ' + (type === 'myagents' || type === 'agent-clients' ? item.status : '')
+          "
+          (click)="itemClick.emit(item)"
+        >
+          <!-- <ion-avatar slot="start">
+            <img src="assets/images/person-circle-outline.png" alt="" />
+          </ion-avatar> -->
+          <ion-label>
+            {{ item.name }}
+            <ng-container *ngIf="type === 'myagents' || type === 'agent-clients'">
+              <p class="pending" *ngIf="item?.status !== 'active'">
+                {{ getStatus(item?.status) }}
+              </p>
+            </ng-container>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="type === 'messages'">
+      <ng-container *ngFor="let client of list; let i = index">
+        <ion-item
+          lines="none"
+          [class]="'client-item '"
+          [ngClass]="{ selected: i === 0 }"
+          (click)="itemClick.emit(client)"
+        >
+          <ion-avatar slot="start">
+            <img src="assets/images/person-circle-outline.png" alt="" />
+          </ion-avatar>
+          <ion-label>
+            {{ client.name }}
+          </ion-label>
+          <ion-badge color="primary" *ngIf="client?.unreadChat > 0" mode="ios" slot="end">
+            {{ client?.unreadChat }}
+          </ion-badge>
+        </ion-item>
+      </ng-container>
+    </ng-container>
+  </ion-list>
+</ion-content>
+<ng-container *ngIf="type == 'myclients' || type == 'myagents' || type === 'agent-clients'">
+  <ion-footer>
+    <ion-toolbar>
+      <ion-item lines="none">
+        <ion-label>Archived</ion-label>
+        <ion-toggle
+          [(ngModel)]="isArchive"
+          class="theme-toggle"
+          slot="start"
+          (ionChange)="archiveToggleChange()"
+        ></ion-toggle>
+      </ion-item>
+    </ion-toolbar>
+  </ion-footer>
+</ng-container>

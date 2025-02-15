@@ -1,0 +1,68 @@
+<ion-content>
+  <div class="content">
+    <div class="add-client-card popup">
+      <div>
+        <div class="header modal-header">{{ title }}</div>
+        <ion-icon
+          slot="icon-only"
+          src="assets/icons/close.svg"
+          (click)="close()"
+          class="close-icon"
+        ></ion-icon>
+      </div>
+      <div class="fixed">
+        <form
+          [formGroup]="sendFileForm"
+          (ngSubmit)="send()"
+          class="content scroll-form form-height"
+          *ngIf="!showLoader; else loading"
+        >
+          <div class="form-wrapper">
+            <ion-item class="form-item">
+              <ion-label position="stacked">File Name</ion-label>
+              <ion-input formControlName="name" type="text"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Notes</ion-label>
+              <ion-textarea formControlName="notes" rows="2" autoGrow="true"></ion-textarea>
+            </ion-item>
+            <div class="file-btns">
+              <div class="file-btn" *ngFor="let i of uploadIds; let index = index">
+                <ion-label>{{ data[index]?.name ?? 'Choose Document' }}</ion-label>
+                <ion-button (click)="clickInput()">SELECT</ion-button>
+                <input
+                  type="file"
+                  id="{{ i }}"
+                  style="display: none"
+                  accept=".jpg, .jpeg, .gif, .png, .mp4, .mov, .pdf, .mp3"
+                  (change)="fileUploadClick($event)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="footer-button-wrapper footer">
+            <ion-button
+              color="secondary"
+              fill="outline"
+              class="theme-button cancel"
+              (click)="close()"
+            >
+              Cancel
+            </ion-button>
+            <ion-button
+              class="theme-button"
+              type="submit"
+              [disabled]="sendFileForm.invalid || data.length == 0"
+            >
+              SEND
+            </ion-button>
+          </div>
+        </form>
+      </div>
+
+      <ng-template #loading>
+        <mlc-loading [text]="loadingText"></mlc-loading>
+      </ng-template>
+    </div>
+  </div>
+</ion-content>

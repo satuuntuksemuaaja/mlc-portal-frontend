@@ -1,0 +1,113 @@
+<div class="messages">
+  <div
+    class="message-list"
+    *ngIf="
+      !(selectedClient?.status === 'pending' || selectedClient?.status === 'cancelled');
+      else statusMessageBox
+    "
+  >
+    <ng-container *ngIf="!messageService.showLoading; else showMsgLoadingcmp">
+      <ng-container
+        *ngIf="allMessages?.items?.length > 0; else noMessages"
+      >
+        <ng-container *ngFor="let message of allMessages?.items as items; let i = index;">
+          <!-- <div class="date" *ngIf="i!=0 && (message.created | date: 'dd/MM/yyyy') != (items[i-1].created | date: 'dd/MM/yyyy')">{{message.created.substring(0,10) | dateSuffix1}}</div> -->
+          <div class="date" *ngIf="message.showDate">{{message.created.substring(0,10) | dateSuffix1}}</div>
+          <!-- <div class="date" *ngIf="i==0">{{message.created.substring(0, 10) | dateSuffix1}}</div> -->
+          <div class="message-card" [ngClass]="{ sender: !message?.own }">
+            <div class="message-section">
+              <div class="new-tag" *ngIf="message?.new">New</div>
+              <div
+                *ngIf="!(message.attachments.length > 0)"
+                class="message-content"
+                [innerHTML]="message?.values | messageSeparator: 'message'"
+              ></div>
+              <ng-container *ngIf="!message.own">
+                <ng-container *ngFor="let m of message.values">
+                  <div [innerHTML]="m['message']"></div>
+                </ng-container>
+              </ng-container>
+              <!-- <div *ngIf="!message.own">{console.log()}</div> -->
+              <!-- <div *ngIf="message.attachments.length>0" class="message-file-content">
+                <div class="header" *ngIf="message?.own">You shared a file</div>
+                <div class="header" *ngIf="!message?.own">
+                  {{message?.values | messageSeparator: 'sentby'}} files with you
+                </div>
+                <div class="content-data">
+                  <div class="file-type">
+                    {{message?.values | messageSeparator: 'sentby'}} Drivers License
+                  </div>
+                  <div class="file-data">
+                    <div class="file-name">Drivers License.pdf</div>
+                    <ion-icon
+                      class="file-download-icon"
+                      name="cloud-download-outline"
+                    ></ion-icon>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div class="message-time">
+              <div>{{ message?.created | date: 'h:mma' }}</div>
+              <div>
+                {{ message?.values | messageSeparator: 'sentby' }}
+                <ion-text *ngIf="message?.own"> &nbsp;({{ organization?.org?.name }}) </ion-text>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #noMessages>
+      <div class="no-messages" *ngIf="!messageService?.errorData?.status; else errMessages">
+        No Messages
+      </div>
+    </ng-template>
+    <ng-template #errMessages>
+      <div class="no-messages">{{ messageService?.errorData?.message }}</div>
+    </ng-template>
+    <ng-template #showMsgLoadingcmp>
+      <mlc-loading text="Loading Messages"></mlc-loading>
+    </ng-template>
+    <ion-infinite-scroll
+      threshold="100px"
+      (ionInfinite)="loadMoreMessages($event)"
+      [disabled]="!(messageService.messageDetails$ | async)?.next_page_after"
+    >
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <div class="new-message" *ngIf="selectedClient?.status === 'active'">
+    <div class="wrapper">
+      <div class="title-lbl">New Message</div>
+      <ckeditor
+        [editor]="editor"
+        [config]="editorConfig"
+        (ready)="onReady($event)"
+        [(ngModel)]="messageText"
+      >
+      </ckeditor>
+      <div class="btn-wrapper">
+        <ion-button color="secondary" fill="outline" class="theme-button cancel-btn">
+          Cancel
+        </ion-button>
+        <ion-button class="theme-button send-btn" (click)="sendMessage()"> Send </ion-button>
+      </div>
+    </div>
+  </div>
+  <ng-template #statusMessageBox>
+    <div class="status-box" *ngIf="selectedClient.status === 'pending'">
+      <h3 class="pending-title">Pending Connection</h3>
+      <p>
+        {{ selectedClient.name }} has not yet connected with {{ organization.org.name }}. <br />Once
+        they connect using the <b>My Life Capsule client</b> then file sharing &amp; messaging can
+        commence.
+      </p>
+    </div>
+    <div class="status-box" *ngIf="selectedClient.status === 'cancelled'">
+      <h3 class="cancel-title">Account Cancelled</h3>
+      <p>{{ selectedClient.name }}'s account was cancelled before any secure sharing commenced.</p>
+    </div>
+  </ng-template>
+</div>

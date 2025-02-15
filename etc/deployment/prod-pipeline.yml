@@ -1,0 +1,34 @@
+variables:
+  vmImageName: ubuntu-latest
+  environmentName: prod
+  buildArtifacts: www
+
+trigger:
+- release/prod
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '16.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install -g @angular/cli
+        npm install
+        ng build --configuration production
+      displayName: 'npm install and build'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Web Build'
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/$(buildArtifacts)'
+
+      

@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@angular-eslint/ng-cli-compat",
+    "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+    "plugin:@angular-eslint/template/process-inline-templates"
+  ],
+  "rules": {
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@angular-eslint/no-empty-lifecycle-method": "off",
+    "@angular-eslint/component-class-suffix": [
+      "error",
+      {
+        "suffixes": ["Page", "Component"]
+      }
+    ],
+    "@angular-eslint/component-selector": [
+      "error",
+      {
+        "type": "element",
+        "prefix": "mlc",
+        "style": "kebab-case"
+      }
+    ]
+  }
+}

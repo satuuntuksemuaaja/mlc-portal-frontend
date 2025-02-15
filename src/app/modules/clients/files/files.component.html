@@ -1,0 +1,160 @@
+<div *ngIf="!(selectedClient?.status === 'pending' || selectedClient?.status === 'cancelled') else statusMessageBox">
+ 
+  <!-- Table Header -->
+  <ng-template #tableLabel let-label="label" let-button="button">
+    <div class="label">
+      <label class="ttl-lbl">{{ label }}</label>
+      <ion-button
+        size="small"
+        *ngIf="button && selectedClient?.status === 'active'"
+        (click)="openSendFile()"
+        >SEND NEW DOCUMENTS</ion-button
+      >
+    </div>
+  </ng-template>
+
+  <!-- Table -->
+  <ng-template #table let-tableData="data" let-label="label" let-showTable="showTable">
+    <table class="size">
+      <thead>
+        <tr class="heading">
+          <th class="name"></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="showTable === 0">
+          <ng-container *ngFor="let file of tableData; let fileIndex = index">
+            <tr>
+              <td class="date" colspan="3">
+                {{ file.created.substring(0, 10) | date: 'dd MMM yy' | dateSuffix }} -
+                {{ file.created | date: 'h:mm a' }}
+              </td>
+            </tr>
+            <div class="line line-width"></div>
+            <tr class="on-hover" (click)="getDataInfo(file.label, file)">
+              <td colspan="2" class="item-name">{{ file.clientName }}</td>
+              <td class="row-icon">
+                <ion-icon class="icon-size" size="large" name="eye"></ion-icon>
+              </td>
+            </tr>
+            <!-- <tr>
+              <td class="inner-row attachments attachment-pos">
+                Attachments ({{ file.attachments.length }})
+              </td>
+            </tr> -->
+            <ng-container *ngFor="let attachment of file.attachments; let attachmentIndex = index">
+              <tr class="on-hover" (click)="openDoc(attachment)">
+                <td class="inner-row file-name font" colspan="2">{{ attachment.name }}</td>
+                <td class="row-icon">
+                  <ng-template #downloadButton>
+                    <ion-icon
+                      class="icon-size"
+                      size="large"
+                      name="download-outline"
+                      (click)="downloadFile($event, attachment.name, fileIndex, attachmentIndex)"
+                    ></ion-icon>
+                  </ng-template>
+                  <ng-container *ngIf="attachment.isDownloading; else downloadButton">
+                    <ion-spinner name="crescent" color="success"></ion-spinner>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <!-- BLANK TEMPLATE -->
+        <ng-container *ngIf="showTable === 4">
+          <tr>
+            <td colspan="3" class="txt-center"></td>
+          </tr>
+        </ng-container>
+
+        <!-- NO DATA TEMPLATE -->
+        <ng-container *ngIf="showTable === 2">
+          <tr>
+            <td colspan="3" class="txt-center">NO DATA AVAILABLE</td>
+          </tr>
+        </ng-container>
+
+        <!-- LOADING TEMPLATE -->
+        <ng-container *ngIf="showTable === 3">
+          <tr>
+            <!-- <td colspan="3" class="txt-center">NO DATA AVAILABLE</td> -->
+            <td class="txt-center" colspan="3">
+              <mlc-loading text="Loading..." [minHeight]="10"></mlc-loading>
+            </td>
+          </tr>
+        </ng-container>
+
+        <!-- RETRY TEMPLATE-->
+        <ng-container *ngIf="showTable === 1">
+          <tr>
+            <ng-container *ngIf="label == 'Sent'; else received">
+              <td colspan="3" class="txt-center">
+                <span>Something went wrong</span><br /><ion-button
+                  class="ion-margin-top"
+                  (click)="getClientSentFiles(selectedClient.id)"
+                  >Retry</ion-button
+                >
+              </td>
+            </ng-container>
+            <ng-template #received>
+              <td colspan="3" class="txt-center">
+                <span>Something went wrong</span><br /><ion-button
+                  class="ion-margin-top"
+                  (click)="getClientReceivedData(selectedClient.id)"
+                  >Retry</ion-button
+                >
+              </td>
+            </ng-template>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-template>
+
+  <!-- SEND FILES -->
+  <ng-container>
+    <div class="send-mt">
+      <ng-container
+        *ngTemplateOutlet="tableLabel; context: { label: 'Sent', button: true }"
+      ></ng-container>
+    </div>
+    <ng-container
+      *ngTemplateOutlet="table; context: { data: sentData, label: 'Sent', showTable: showSentTable }"
+    ></ng-container>
+  </ng-container>
+
+  <!-- RECEIVED FILES -->
+  <ng-container>
+    <div class="recived-mt">
+      <ng-container
+        *ngTemplateOutlet="tableLabel; context: { label: 'Received', button: false }"
+      ></ng-container>
+    </div>
+    <ng-container
+      *ngTemplateOutlet="
+        table;
+        context: { data: receivedData, label: 'Received', showTable: showReceivedTable }
+      "
+    ></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #statusMessageBox>
+  <div class="status-box" *ngIf="selectedClient.status === 'pending'">
+    <h3 class="pending-title">Pending Connection</h3>
+    <p>
+      {{selectedClient.name}} has not connected to your organisation.
+      <br />Once they connect using the Client Capsule you may commence file sharing and messaging.
+    </p>
+  </div>
+  <div class="status-box" *ngIf="selectedClient.status === 'cancelled'">
+    <h3 class="cancel-title">Account Cancelled</h3>
+    <p>
+      {{selectedClient.name}}'s account was cancelled before any secure sharing commenced.
+    </p>
+  </div>
+</ng-template>

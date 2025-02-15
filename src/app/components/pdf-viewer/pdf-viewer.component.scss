@@ -1,0 +1,21 @@
+.pg-bar {
+  margin: auto;
+  width: 80%;
+  position: relative;
+  height: 90vh;
+  display: grid;
+  place-items: center;
+}
+
+.filename{
+  text-align: center;
+  font-size: medium;
+}
+
+.header-label{
+  margin-right: auto; color: black; font-size: large;
+}
+
+.close{
+  margin-right: 5px;
+}

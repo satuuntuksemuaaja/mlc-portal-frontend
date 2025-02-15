@@ -1,0 +1,7 @@
+{
+  "name": "My Life Capsule Partner Portal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

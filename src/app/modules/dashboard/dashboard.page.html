@@ -1,0 +1,76 @@
+<ion-content class="dashboard-content">
+  <ng-container *ngIf="isLoading; else showContent">
+    <mlc-loading [text]="'Click to stop loading'" (click)="toggleLoading()"></mlc-loading>
+  </ng-container>
+
+  <ng-template #showContent>
+    <div class="welcome-lines">Welcome {{currentUser?.me?.name}}!</div>
+    <div class="content">
+      <div class="clients">
+        <div class="card-item cd" (click)="openAddClient()">
+          <div class="icon-wrapper">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </div>
+          <div class="description">
+            <div class="lbl">Add new client</div>
+            <div class="lbl-desc">Help your clients take control of their life admin</div>
+          </div>
+        </div>
+        <div class="card-item cd" [routerLink]="'/clients'">
+          <div class="icon-wrapper">
+            <ion-icon name="list-outline"></ion-icon>
+          </div>
+          <div class="description">
+            <div class="lbl">View client list</div>
+            <div class="lbl-desc">Manage client relationships</div>
+          </div>
+        </div>
+      </div>
+      <div class="activity cd">
+        <div class="stickey-activity-header activity-btn-space">
+          <div class="card-header">
+            <ion-icon class="icon" name="notifications-outline"></ion-icon>
+            <div class="title lbl">Recent Activity</div>
+          </div>
+          <div class="card-header" (click)="loadActivities(0, 50, true)">
+            <ion-icon class="icon" name="refresh-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="card-content">
+          <ion-content class="table-height">
+            <ng-container *ngIf="!activityLoading ; else activityLoadingCmp">
+              <!-- <ng-container
+                *ngFor="let activity of activities | paginate : {itemsPerPage: itemsPerpage, currentPage: currentPage}"
+              > -->
+              <ng-container *ngFor="let activity of activities">
+                <div class="activity-item" (click)="openRelativePage(activity)">
+                  <div class="user-name">{{activity?.title}}</div>
+                  <div class="desc">{{activity?.message}}</div>
+                  <div class="time">{{activity?.created | date: 'dd-MMM-yy h:mma'}}</div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-template #activityLoadingCmp>
+              <mlc-loading text="Activity Loading"></mlc-loading>
+            </ng-template>
+            <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" threshold="0px">
+              <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more data..."
+              ></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </ion-content>
+        </div>
+      </div>
+    </div>
+    <div class="footer-text">
+      <p class="lightgrey-text">
+        This account is powered by Meeco state-of-the-art award-winning privacy & security.<span
+          (click)="learnMore()"
+        >
+          Learn More.</span
+        >
+      </p>
+    </div>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,76 @@
+.client-list-panel {
+  --side-max-width: 280px;
+  ion-menu {
+    --border: 1px solid var(--ion-color-light);
+  }
+}
+
+.client-content {
+  padding: 14px;
+}
+
+.buttons-position{
+  margin-left: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 4px;
+}
+
+.inactive{
+  filter: opacity(50%);
+}
+
+.actions{
+  color: lightgray;
+}
+
+.split-margin{
+  margin-top: 100px;
+}
+
+.table-pos{
+  width: 100%;
+  height: 100%;
+  margin-left: 16px;
+}
+
+.button-head{
+  width: 100%;
+  max-width: 950px;
+  // overflow-y: hidden;
+  // overflow-x: hidden;
+  margin-bottom: 32px;
+}
+
+.heading-border {
+  border: 3px;
+}
+
+.heading-size{
+  font-size: 22px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 78%;
+  margin-left: 20px;
+}
+.white-text {
+  color: #fff !important;
+}
+
+.table-size{
+  // height: 100%;
+  width: 102%;
+}
+
+.assign-button {
+  margin-left: 20px;
+  margin-top: 24px;
+}
+
+.form-wrapper {
+  margin-top: 0px !important;
+}

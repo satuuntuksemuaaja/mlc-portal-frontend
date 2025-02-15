@@ -1,0 +1,20 @@
+<ion-content>
+  <div class="invalid-auth-wrapper card-container">
+    <div class="auth-card">
+      <div class="title invalid">{{ title }}</div>
+      <div class="sub-text">{{ contentText }}</div>
+      <div class="btn-wrapper">
+        <ion-button
+          (click)="closeClick.emit(true)"
+          mode="ios"
+          expand="block"
+          color="primary"
+          type="submit"
+          class="auth-button"
+        >
+          Close & Retry
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

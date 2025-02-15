@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-split-pane class="client-list-panel" contentId="mymessages" [when]="true">
+    <ion-menu contentId="mymessages" menuId="mymessages">
+      <mlc-side-bar
+        (itemClick)="onSelectClient($event)"
+        [type]="'myclients'"
+        [clientList]="filteredClients"
+        [selectedClient]="selectedClient"
+        title="My Clients"
+        [isArchive]="isArchive"
+        (archiveChange)="setArchive($event)"
+        [showLoading]="loading"
+        (searchTextChange)="filter($event)"
+        (clearSearch)="clearFilter()"
+        [allowAdd]="false"
+      >
+      </mlc-side-bar>
+    </ion-menu>
+    <ion-content id="mymessages" #content [hidden]="loading">
+      <div class="client-content">
+        <mlc-client-header [client]="selectedClient" [displayTabs]="false"> </mlc-client-header>
+        <div class="files-wrapper">
+          <mlc-message-list
+            [organization]="organization"
+            [selectedClient]="selectedClient"
+          ></mlc-message-list>
+        </div>
+      </div>
+    </ion-content>
+  </ion-split-pane>
+</ion-content>

@@ -1,0 +1,30 @@
+<div class="notifications-wrapper">
+  <div class="notification-header ion-text-center">Recent Activity</div>
+
+  <div class="notification-content">
+    <ng-container *ngIf="!loading; else loadingCmp">
+      <div class="view-all-option ion-text-right" (click)="viewAll()">View All</div>
+      <div class="notification-list">
+        <ng-container *ngFor="let activity of activities">
+          <ion-item
+            button
+            detail="true"
+            class="notification-item"
+            lines="none"
+            (click)="openRelativePage(activity)"
+          >
+            <ion-label>
+              {{ activity?.title }}
+              <p>
+                {{ activity?.message }}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #loadingCmp>
+      <mlc-loading text="Activity Loading"></mlc-loading>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.client-info-item {
+  --padding-start: 0px;
+  & ion-avatar {
+    height: 48px;
+    width: 48px;
+    margin-right: 16px;
+    img {
+      height: inherit;
+      width: inherit;
+    }
+  }
+  & ion-label {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 120%;
+    color: var(--mlc-ink);
+  }
+}
+
+.message-options-btns {
+  margin-top: 16px;
+}
+
+.client-label{
+  display: flex;
+  flex-direction: column;
+  span {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}
+
+.cancel{
+  color: #f45b59;
+}
+.pending {
+  color: #8998a2;
+}
+.success{
+  color: var(--ion-color-primary, #3880ff);
+}

@@ -1,0 +1,70 @@
+<ion-content>
+  <div class="content">
+    <div class="add-client-card popup">
+      <div class="header">New Client</div>
+      <form [formGroup]="addClientForm" class="content" *ngIf="!showLoader; else loading">
+        <div class="form-wrapper">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Name</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <ion-item class="form-item">
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email" type="email"></ion-input>
+            <ng-container *ngFor="let validation of validationHelper.validationMessages.email">
+              <ng-container
+                class="error-message"
+                *ngIf="addClientForm.get('email').hasError(validation.type) && (addClientForm.get('email').dirty || addClientForm.get('email').touched)"
+              >
+                <ion-note slot="error" class="form-error"> {{ validation.message }} </ion-note>
+              </ng-container>
+            </ng-container>
+          </ion-item>
+          <ion-item class="form-item">
+            <ion-label position="stacked">Phone (Optional)</ion-label>
+            <ion-input formControlName="phone" type="tel"></ion-input>
+            <ng-container *ngFor="let validation of validationHelper.validationMessages.phone">
+              <ng-container
+                class="error-message"
+                *ngIf="addClientForm.get('phone').hasError(validation.type) && (addClientForm.get('phone').dirty || addClientForm.get('phone').touched)"
+              >
+                <ion-note slot="error" class="form-error"> {{ validation.message }} </ion-note>
+              </ng-container>
+            </ng-container>
+          </ion-item>
+          <ion-item class="form-item">
+            <ion-label position="stacked">Your Client Reference (Optional)</ion-label>
+            <ion-input formControlName="clientReference" type="text"></ion-input>
+            <ng-container
+              *ngFor="let validation of validationHelper.validationMessages.clientReference"
+            >
+              <ng-container
+                class="error-message"
+                *ngIf="addClientForm.get('clientReference').hasError(validation.type) && (addClientForm.get('clientReference').dirty || addClientForm.get('clientReference').touched)"
+              >
+                <ion-note slot="error" class="form-error"> {{ validation.message }} </ion-note>
+              </ng-container>
+            </ng-container>
+          </ion-item>
+        </div>
+        <div class="footer-button-wrapper">
+          <ion-button
+            color="secondary"
+            fill="outline"
+            class="theme-button cancel"
+            (click)="close()"
+          >
+            Cancel
+          </ion-button>
+          <ion-button class="theme-button" (click)="addClient()" [disabled]="addClientForm.invalid">
+            Add Client
+          </ion-button>
+        </div>
+      </form>
+
+      <ng-template #loading>
+        <mlc-loading text="Creating Client"></mlc-loading>
+      </ng-template>
+    </div>
+  </div>
+</ion-content>

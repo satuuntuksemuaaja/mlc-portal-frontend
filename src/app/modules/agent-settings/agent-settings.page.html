@@ -1,0 +1,68 @@
+<mlc-crop-and-rotate
+  *ngIf="cropImage && !loading"
+  (sendImage)="updateImage($event)"
+  (cancelEdit)="cancelCropper()"
+  style="height: 100%"
+></mlc-crop-and-rotate>
+
+<ion-content class="settings-page ion-padding">
+  <ng-container *ngIf="!loading; else loadingCmp">
+    <div class="content">
+      <div class="header">My Settings</div>
+
+      <form [formGroup]="clientForm">
+        <div class="form-wrapper">
+          <ion-item class="form-item">
+            <ion-label position="stacked"> Name</ion-label>
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
+          <ion-item class="form-item">
+            <ion-label position="stacked"> Phone</ion-label>
+            <ion-input formControlName="phone"></ion-input>
+          </ion-item>
+          <ion-item class="form-item">
+            <ion-label position="stacked"> Email</ion-label>
+            <ion-input formControlName="email"></ion-input>
+          </ion-item>
+        </div>
+        <div class="btns">
+          <ion-button
+            color="secondary"
+            mode="ios"
+            class="theme-button"
+            fill="outline"
+            (click)="cancel()"
+          >
+            Cancel
+          </ion-button>
+          <ion-button
+            color="primary"
+            mode="ios"
+            class="theme-button"
+            type="submit"
+            (click)="save()"
+            [disabled]="!clientForm.valid"
+          >
+            Save
+          </ion-button>
+        </div>
+      </form>
+
+      <div class="header photo">Photo</div>
+      <div class="agent-avatar">
+        <ion-avatar>
+          <img *ngIf="!userProfileImage" src="assets/images/person-circle-outline.png" />
+          <img *ngIf="userProfileImage" [src]="userProfileImage" />
+        </ion-avatar>
+
+        <ion-button color="primary" mode="ios" class="theme-button sm" (click)="showCropper()">
+          Edit</ion-button
+        >
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingCmp>
+    <mlc-loading></mlc-loading>
+  </ng-template>
+</ion-content>

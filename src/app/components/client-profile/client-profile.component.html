@@ -1,0 +1,84 @@
+<form [formGroup]="clientForm">
+  <div class="form-wrapper">
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Email</ion-label>
+      <ion-input formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Created</ion-label>
+      <ion-input formControlName="created"></ion-input>
+    </ion-item>
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Phone</ion-label>
+      <ion-input formControlName="phone"></ion-input>
+    </ion-item>
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Client Ref</ion-label>
+      <ion-input formControlName="ref"></ion-input>
+    </ion-item>
+    <ion-item class="form-item">
+      <ion-label position="stacked"> Notes</ion-label>
+      <ion-textarea row="4" formControlName="notes"></ion-textarea>
+    </ion-item>
+  </div>
+  <div class="btns">
+    <div>
+      <ion-button
+        *ngIf="client?.status === 'active'"
+        color="danger"
+        mode="ios"
+        class="archive-button"
+        (click)="archive()"
+      >
+        Archive Client
+      </ion-button>
+      <ion-button
+        (click)="restore()"
+        *ngIf="client?.status === 'archived'"
+        color="secondary"
+        mode="ios"
+        class="archive-button"
+      >
+        Restore Client
+      </ion-button>
+
+      <ion-button
+        *ngIf="client?.status === 'pending'"
+        color="danger"
+        mode="ios"
+        class="archive-button"
+        (click)="cancelRequest()"
+      >
+        Cancel Client
+      </ion-button>
+
+
+      <ion-button
+        *ngIf="client?.status === 'cancelled'"
+        color="danger"
+        mode="ios"
+        class="archive-button"
+        (click)="reinviteRequest()"
+      >
+        Re-Invite Client
+      </ion-button>      
+    </div>
+
+    <div>
+      <ion-button color="secondary" mode="ios" fill="outline" (click)="cancel()">Cancel</ion-button>
+      <ion-button
+        color="primary"
+        mode="ios"
+        type="submit"
+        (click)="save()"
+        [disabled]="clientForm.invalid"
+      >
+        Save
+      </ion-button>
+    </div>
+  </div>
+</form>

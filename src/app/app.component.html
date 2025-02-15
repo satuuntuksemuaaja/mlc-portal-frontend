@@ -1,0 +1,152 @@
+<ion-app>
+  <ng-container *ngIf="!checkingSystemUp">
+    <mlc-common-header [isOffline]="isSystemDown" title="My Life Capsule - Privacy-First Client Engagement" *ngIf="isLoggedIn">
+    </mlc-common-header>
+    <mat-sidenav-container>
+      <mat-sidenav #appDrawer rail-mode opened="true" class="main-menu" *ngIf="isLoggedIn">
+        <ion-item
+          routerDirection="root"
+          routerLinkActive="activated"
+          class="menu-header"
+          lines="none"
+        >
+          <ion-avatar
+            #orgLogoRef
+            id="orgLogo"
+            slot="start"
+            routerDirection="root"
+            [routerLink]="'/dashboard'"
+          >
+            <img *ngIf="orgLogo" [src]="orgLogo" (error)="imageError()" />
+            <img *ngIf="!orgLogo" src="assets/images/person-circle-outline.png" />
+          </ion-avatar>
+          <ion-label>
+            <span routerDirection="root" [routerLink]="'/dashboard'">
+              {{ userDetails?.org?.name }}
+            </span>
+            <p routerDirection="root" [routerLink]="'/agent-settings'">
+              {{ userDetails?.me?.name }}
+            </p>
+          </ion-label>
+        </ion-item>
+        <mat-nav-list class="menu-list align-logout">
+          <div>
+            <a
+              routerDirection="root"
+              [routerLink]="'/dashboard'"
+              routerLinkActive="activated"
+              mat-list-item
+              class="menu-item"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" src="assets/icons/home.svg"> </ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Dashboard</p>
+            </a>
+
+            <a
+              mat-list-item
+              class="menu-item"
+              routerDirection="root"
+              [routerLink]="'/clients'"
+              routerLinkActive="activated"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" src="assets/icons/users.svg"> </ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Clients</p>
+            </a>
+
+            <a
+              mat-list-item
+              class="menu-item"
+              routerDirection="root"
+              [routerLink]="'/files'"
+              routerLinkActive="activated"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" src="assets/icons/file-lock.svg"> </ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Files</p>
+            </a>
+
+            <a
+              mat-list-item
+              class="menu-item"
+              routerDirection="root"
+              [routerLink]="'/messages'"
+              routerLinkActive="activated"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" src="assets/icons/message.svg"> </ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Messages</p>
+            </a>
+
+            <!-- <a mat-list-item class="menu-item">
+            <mat-icon class="menu-icon" mat-list-icon>
+              <ion-icon class="menu-icon" src="assets/icons/file-lock.svg"> </ion-icon>
+            </mat-icon>
+            <p class="menu-label" matLine>On Share Consent</p>
+          </a> -->
+            <a
+              *ngIf="userDetails?.me?.role == 'Administrator'"
+              mat-list-item
+              class="menu-item"
+              routerDirection="root"
+              [routerLink]="'/administration'"
+              routerLinkActive="activated"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" name="hammer-outline"></ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Administration</p>
+            </a>
+
+            <a
+              mat-list-item
+              class="menu-item"
+              routerDirection="root"
+              [routerLink]="'/agent-settings'"
+              routerLinkActive="activated"
+            >
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" src="assets/icons/settings.svg"> </ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Settings</p>
+            </a>
+          </div>
+          <div>
+            <a mat-list-item class="menu-item" (click)="logout()">
+              <mat-icon class="menu-icon" mat-list-icon>
+                <ion-icon class="menu-icon" name="log-out-outline"></ion-icon>
+              </mat-icon>
+              <p class="menu-label" matLine>Logout</p>
+            </a>
+          </div>
+
+          <!-- <ion-item lines="none">
+          <ion-avatar class="user-avatar" slot="start"> </ion-avatar>
+          <ion-label class="user-name">Julia Blake</ion-label>
+        </ion-item> -->
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content style="height: calc(100vh - 56px)">
+        <ion-router-outlet id="main-content"></ion-router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ng-container>
+  <ng-container *ngIf="checkingSystemUp">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: #fff;
+      "
+    >
+      <mlc-loading text="Checking system"></mlc-loading>
+    </div>
+  </ng-container>
+</ion-app>

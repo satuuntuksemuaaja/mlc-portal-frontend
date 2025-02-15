@@ -1,0 +1,45 @@
+<div>
+  <ion-item-divider>
+    <ion-label class="header-label">{{ filename }}</ion-label>
+    <!-- <ion-button
+      color="medium"
+      fill="outline"
+      size="small"
+      fileSaver
+      [method]="'GET'"
+      [url]="videoSource"
+      [fileName]="filename"
+      (success)="downloadSuccess($event)"
+      (error)="downloadError($event)"
+      style="margin-right: 30px"
+      >Download</ion-button
+    > -->
+    <ion-button
+      *ngIf="show"
+      color="medium"
+      fill="outline"
+      size="small"
+      style="margin-right: 30px"
+      (click)="downloadFile()"
+      >Download</ion-button
+    >
+    <ion-icon name="close-outline" (click)="close()" class="close"></ion-icon>
+  </ion-item-divider>
+
+  <div *ngIf="show" class="pg-bar">
+    <video
+      controls
+      #videoPlayer
+      [autoplay]="false"
+      [poster]="poster"
+      [muted]="true"
+      class="player-height"
+    >
+      <source [src]="safeVideoSource" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div *ngIf="showLoading == true" class="pg-bar">
+    <mlc-loading [text]="'Downloading ' + filename"></mlc-loading>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<ion-content>
+  <ion-split-pane class="client-list-panel" contentId="clients" [when]="true">
+    <ion-menu contentId="clients" menuId="clients">
+      <mlc-side-bar
+        (itemClick)="onSelectClient($event)"
+        (add)="addClient()"
+        [type]="'myclients'"
+        [clientList]="filteredClients"
+        [selectedClient]="selectedClient"
+        title="My Clients"
+        [isArchive]="isArchive"
+        (archiveChange)="setArchive($event)"
+        [showLoading]="loading"
+        (searchTextChange)="filter($event)"
+        (clearSearch)="clearFilter()"
+      >
+      </mlc-side-bar>
+    </ion-menu>
+    <ion-content id="clients" #content [hidden]="loading">
+      <div class="client-content">
+        <mlc-client-header
+          [viewMode]="viewMode"
+          [client]="selectedClient"
+          (viewChange)="changeView($event)"
+        >
+        </mlc-client-header>
+        <div class="files-wrapper">
+          <!-- <div class="sent-files"></div> -->
+          <div *ngIf="viewMode == 'messages'">
+            <mlc-message-list
+              [organization]="organization"
+              [selectedClient]="selectedClient"
+            ></mlc-message-list>
+          </div>
+          <!-- FILES -->
+          <div *ngIf="viewMode == 'files'">
+              <mlc-files [selectedClient]="selectedClient" [prevMode]="prevViewMode"></mlc-files>
+          </div>
+          <!-- Profile -->
+          <div class="consent" *ngIf="viewMode == 'profile'">
+            <mlc-client-profile
+              (doRefresh)="refresh()"
+              (updateClient)="updateClient($event)"
+              [client]="selectedClient"
+            >
+            </mlc-client-profile>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </ion-split-pane>
+</ion-content>

@@ -1,0 +1,24 @@
+.error-wrapper {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & .error-header {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 120%;
+    color: var(--ion-color-danger);
+    margin-top: 16px;
+  }
+  & .error-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 120%;
+    color: var(--ion-color-dark);
+    margin-top: 32px;
+  }
+}

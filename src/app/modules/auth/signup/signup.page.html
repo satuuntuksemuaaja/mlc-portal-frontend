@@ -1,0 +1,32 @@
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!showLoading; else loading">
+    <div class="card-container">
+      <div class="auth-card">
+        <div class="title">Sign-up to My Life Capsule</div>
+        <div class="sub-title">Privacy-first client engagement portal</div>
+        <div class="form-wrapper">
+          <form [formGroup]="signupForm">
+            <ion-label class="form-label">Enter your sign-up key </ion-label>
+            <ion-textarea required rows="3" formControlName="key" type="text"></ion-textarea>
+          </form>
+          <div class="btn-wrapper">
+            <ion-button
+              mode="ios"
+              expand="block"
+              color="primary"
+              type="submit"
+              class="auth-button"
+              [disabled]="signupForm.invalid"
+              (click)="checkAPIKey()"
+            >
+              Continue
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <mlc-loading text="Checking key....."></mlc-loading>
+  </ng-template>
+</ion-content>

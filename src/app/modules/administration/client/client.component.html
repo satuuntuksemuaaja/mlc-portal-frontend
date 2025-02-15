@@ -1,0 +1,174 @@
+<mlc-loading [text]="'Loading'" *ngIf="!clientList"></mlc-loading>
+<ion-split-pane
+  class="client-list-panel split-margin"
+  contentId="clients"
+  [when]="true"
+  *ngIf="clientList"
+>
+  <ion-menu contentId="clients" menuId="clients">
+    <mlc-side-bar
+      (itemClick)="openMessage($event)"
+      (add)="addClient()"
+      [type]="'agent-clients'"
+      [list]="clientList"
+      [selectedAgent]="selectedClient"
+      [title]="'Clients'"
+      [selectedClient]="selectedClient"
+      (archiveChange)="changeArchiveClients($event)"
+      [showLoading]="showLoading"
+    ></mlc-side-bar>
+  </ion-menu>
+  <ion-content id="clients" #content [hidden]="showLoading">
+    <ion-item style="width: 80%" lines="none">
+      <!-- <ion-avatar slot="start">
+        <img src="assets/images/person-circle-outline.png" alt="" />
+      </ion-avatar> -->
+      <ion-label *ngIf="selectedClient">
+        <h2 class="heading-size">{{ selectedClient.name }}</h2>
+      </ion-label>
+      <ion-button fill="outline" class="active-button" *ngIf="selectedClient?.status == 'active'">{{
+        selectedClient.status
+      }}</ion-button>
+      <ion-button fill="outline" color="medium" *ngIf="selectedClient?.status == 'pending'">{{
+        selectedClient.status
+      }}</ion-button>
+      <ion-button
+        fill="outline"
+        color="danger"
+        class="archive-button"
+        *ngIf="selectedClient?.status == 'archived' || selectedClient?.status == 'cancelled'"
+        >{{ selectedClient.status }}</ion-button
+      >
+    </ion-item>
+    <hr />
+    <div class="buttons-position active">
+      <ion-button
+        color="secondary"
+        size="small"
+        (click)="changeViewMode('settings')"
+        [ngClass]="{ inactive: viewMode != 'settings' }"
+      >
+        <span class="white-text"> SETTINGS </span>
+      </ion-button>
+      <ion-button
+        color="secondary"
+        size="small"
+        (click)="changeViewMode('agents')"
+        [ngClass]="{ inactive: viewMode != 'agents' }"
+      >
+        <span class="white-text"> Agents </span>
+      </ion-button>
+      <ion-button
+        color="secondary"
+        size="small"
+        (click)="changeViewMode('subscription')"
+        [ngClass]="{ inactive: viewMode != 'subscription' }"
+      >
+        <span class="white-text"> Subscription </span>
+      </ion-button>
+    </div>
+    <div class="button-head">
+      <div style="margin-left: 20px" *ngIf="viewMode == 'settings'">
+        <form [formGroup]="clientForm">
+          <div class="form-wrapper">
+            <ion-item class="form-item">
+              <ion-label position="stacked">Name</ion-label>
+              <ion-input formControlName="name" type="text"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input formControlName="email" type="text"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Phone</ion-label>
+              <ion-input formControlName="phone" type="tel"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Created</ion-label>
+              <ion-input formControlName="created" type="text"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Client Ref</ion-label>
+              <ion-input formControlName="ref" type="text"></ion-input>
+            </ion-item>
+            <ion-item class="form-item">
+              <ion-label position="stacked">Notes</ion-label>
+              <ion-textarea formControlName="notes" rows="4"></ion-textarea>
+            </ion-item>
+          </div>
+          <div class="btns-footer">
+            <div>
+              <ion-button
+                *ngIf="selectedClient?.status === 'active'"
+                color="danger"
+                mode="ios"
+                class="archive-button"
+                (click)="archive()"
+              >
+                Archive Client
+              </ion-button>
+              <ion-button
+                (click)="restore()"
+                *ngIf="selectedClient?.status === 'archived'"
+                color="secondary"
+                mode="ios"
+                class="archive-button"
+              >
+                Restore Client
+              </ion-button>
+              <ion-button
+                *ngIf="selectedClient?.status === 'pending'"
+                color="danger"
+                mode="ios"
+                class="archive-button"
+                (click)="cancelRequest()"
+              >
+                Cancel Client
+              </ion-button>
+            </div>
+            <div>
+              <ion-button color="secondary" mode="ios" fill="outline" (click)="cancel()">
+                Cancel
+              </ion-button>
+              <ion-button
+                color="primary"
+                mode="ios"
+                type="submit"
+                (click)="updateClient(this.clientForm?.getRawValue())"
+                [disabled]="clientForm.invalid"
+              >
+                Save
+              </ion-button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="viewMode == 'agents'" class="table-size">
+        <mlc-loading *ngIf="agentLoading" [text]="'LOADING'"></mlc-loading>
+        <div *ngIf="!agentLoading">
+          <ag-grid-angular
+            class="ag-theme-alpine table-pos"
+            domLayout="autoHeight"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            [rowData]="agentTableData"
+            (gridReady)="onGridReady($event)"
+          ></ag-grid-angular>
+          <ion-button color="success" class="assign-button" (click)="openAssignAgent()"
+            >ASSIGN AGENT</ion-button
+          >
+        </div>
+      </div>
+      <div *ngIf="viewMode == 'subscription'" class="table-size">
+        <ag-grid-angular
+          [colWidth]="320"
+          domLayout="autoHeight"
+          class="ag-theme-alpine table-pos"
+          [columnDefs]="clientSubcriptionDefs"
+          [defaultColDef]="defaultColDef"
+          [rowData]="clientSubscriptionData"
+        ></ag-grid-angular>
+      </div>
+    </div>
+  </ion-content>
+</ion-split-pane>

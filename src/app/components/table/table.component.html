@@ -1,0 +1,28 @@
+<ion-grid>
+  <ion-row>
+    <ion-item-divider class="ion-no-margin">
+      <ion-col *ngFor="let heading of tableConfigs" class="bold col">
+        {{ heading['title'] | uppercase }}
+        <ion-icon *ngIf="sort == true" name="caret-up-outline"></ion-icon>
+        <ion-icon *ngIf="sort == true" name="caret-down-outline"></ion-icon>
+      </ion-col>
+    </ion-item-divider>
+  </ion-row>
+  <ion-row *ngFor="let data of rowData | keyvalue">
+    <ion-item-divider>
+      <ion-col
+        *ngFor="let heading of tableConfigs"
+        [ngClass]="{ bold: heading.bold === true }"
+        class="row"
+      >
+        <span
+          [ngClass]="{
+            active: data.value[heading.title] == 'Active' && heading.active == true,
+            inactive: data.value[heading.title] != 'Active' && heading.active == true
+          }"
+          >{{ data.value[heading.title] }}</span
+        >
+      </ion-col>
+    </ion-item-divider>
+  </ion-row>
+</ion-grid>

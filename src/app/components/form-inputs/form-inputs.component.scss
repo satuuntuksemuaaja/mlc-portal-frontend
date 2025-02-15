@@ -1,0 +1,65 @@
+.button-position{
+  margin-top: 15px;
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+  position: relative;
+}
+
+.cancel-button {
+  // --background: #93e9be;
+  --background-hover: #9ce0be;
+  --background-activated: #88f4be;
+  --background-focused: #88f4be;
+
+  --color: rgb(150, 150, 150);
+
+  --border-radius: 4px;
+  --border-color: rgb(150, 150, 150);
+  --border-style: solid;
+  --border-width: 1px;
+
+  // --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: deeppink;
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
+
+.archive-button {
+  --background: #ED6A5E;
+  --background-hover: #ED6A5E;
+  --background-activated: #ED6A5E;
+  --background-focused: #ED6A5E;
+
+  --color:white;
+
+  --border-radius: 4px;
+  --border-color: #ED6A5E;
+  --border-style: solid;
+  --border-width: 1px;
+
+  // --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: deeppink;
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  // margin-right: 30px;
+}
+
+.to-drop-down{
+  width: 47%;
+  margin-left: 4%;
+}
+
+ion-select::part(icon) {
+  display: none !important;
+}
+
+.archivePos {
+  position: absolute;
+  left: 0;
+  width: fit-content;
+}

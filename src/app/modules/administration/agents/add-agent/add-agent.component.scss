@@ -1,0 +1,31 @@
+.content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  & .add-client-card {
+    box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    width: 100%;
+    margin: auto;
+    max-width: 481px;
+  }
+}
+
+.item-margin{
+  margin-bottom: 16px;
+}
+
+.footer-wrapper {
+  padding: 5px 0px 0px;
+  gap: 10px;
+  border-top: 1px solid var(--ion-color-light-shade);
+  text-align: right;
+  width: 100%;
+  margin-top: 142px;
+}
+
+.form{
+  margin-top: 0px;
+  justify-content: initial;
+}

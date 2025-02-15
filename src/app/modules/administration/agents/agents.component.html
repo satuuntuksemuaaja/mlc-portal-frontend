@@ -1,0 +1,174 @@
+<div *ngIf="!agents || isLoading">
+  <mlc-loading [text]="'Loading'"></mlc-loading>
+</div>
+<div *ngIf="agents && !isLoading">
+  <ion-split-pane
+    class="client-list-panel split-margin"
+    contentId="clients"
+    [when]="true"
+    *ngIf="viewMode != 'editedImg'"
+  >
+    <ion-menu contentId="clients" menuId="clients">
+      <mlc-side-bar
+        (itemClick)="openAgent($event)"
+        (add)="addClient()"
+        [type]="'myagents'"
+        [list]="agents"
+        [title]="'Agents'"
+        [showSearch]="true"
+        [isArchive]="isArchived"
+        [selectedAgent]="selectedAgent"
+        (archiveChange)="changeArchiveAgents($event)"
+      ></mlc-side-bar>
+    </ion-menu>
+    <ion-content id="clients" #content>
+      <ion-item lines="none" style="width: 80%">
+        <ion-avatar slot="start">
+          <img [src]="agentProfileImg" />
+        </ion-avatar>
+        <ion-label *ngIf="selectedAgent">
+          <h2 class="heading-size">{{ selectedAgent.name }}</h2>
+        </ion-label>
+        <ion-button fill="outline" class="active-button" *ngIf="selectedAgent?.status == 'active'"
+          >Active</ion-button
+        >
+        <ion-button
+          fill="outline"
+          color="danger"
+          class="archive-button"
+          *ngIf="selectedAgent?.status == 'archived'"
+          >Archived</ion-button
+        >
+      </ion-item>
+      <hr />
+      <div class="buttons-position active">
+        <ion-button
+          color="secondary"
+          size="small"
+          (click)="changeViewMode('settings')"
+          [ngClass]="{ inactive: viewMode != 'settings' }"
+          ><div class="button-color">SETTINGS</div></ion-button
+        >
+        <ion-button
+          color="secondary"
+          size="small"
+          (click)="changeViewMode('clients')"
+          [ngClass]="{ inactive: viewMode != 'clients' }"
+          ><div class="button-color">CLIENTS</div></ion-button
+        >
+        <ion-button
+          color="secondary"
+          size="small"
+          (click)="changeViewMode('audit')"
+          [ngClass]="{ inactive: viewMode != 'audit' }"
+          ><div class="button-color">HISTORY</div></ion-button
+        >
+      </div>
+      <div class="button-head">
+        <div style="margin-left: 20px" *ngIf="viewMode == 'settings'">
+          <form [formGroup]="agentForm" (ngSubmit)="updateAgent(agentForm.getRawValue())">
+            <div class="form-wrapper">
+              <ion-item class="form-item">
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="name" type="text"></ion-input>
+              </ion-item>
+              <ion-item class="form-item">
+                <ion-label position="stacked">Email</ion-label>
+                <ion-input formControlName="email" type="text"></ion-input>
+              </ion-item>
+              <ion-item class="form-item">
+                <ion-label position="stacked">Phone</ion-label>
+                <ion-input formControlName="phone" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Role</ion-label>
+                <ion-select
+                  interface="alert"
+                  placeholder="Role"
+                  formControlName="roleId"
+                  (ionChange)="getCurrentRole($event)"
+                >
+                  <ion-select-option *ngFor="let option of roles" [value]="option.roleId">
+                    {{ option.role }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="btns-footer">
+              <div>
+                <ion-button
+                  *ngIf="
+                    selectedAgent?.status === 'active' &&
+                    userDetails.me.email !== selectedAgent?.email
+                  "
+                  color="danger"
+                  mode="ios"
+                  class="archive-button"
+                  (click)="archiveAgentClick()"
+                >
+                  Archive Agent
+                </ion-button>
+                <ion-button
+                  *ngIf="selectedAgent?.status === 'archived'"
+                  color="success"
+                  mode="ios"
+                  class="archive-button"
+                  (click)="restoreAgentClick()"
+                >
+                  Restore Agent
+                </ion-button>
+              </div>
+              <div>
+                <ion-button color="secondary" mode="ios" fill="outline" (click)="cancelUpdate()">
+                  Cancel
+                </ion-button>
+                <ion-button color="primary" mode="ios" type="submit" [disabled]="agentForm.invalid">
+                  Save
+                </ion-button>
+              </div>
+            </div>
+          </form>
+
+          <ion-item-divider class="heading">Photo</ion-item-divider>
+          <div class="upload-image">
+            <ion-avatar>
+              <img alt="Loading" [src]="agentProfileImg" />
+            </ion-avatar>
+            <ion-button
+              color="success"
+              class="button-pos"
+              (click)="changeAdministrationMode('editImage')"
+              >EDIT</ion-button
+            >
+          </div>
+        </div>
+        <div *ngIf="viewMode == 'clients'">
+          <mlc-loading *ngIf="clientTableLoading" [text]="'LOADING'"></mlc-loading>
+          <div *ngIf="!clientTableLoading">
+            <ag-grid-angular
+              class="ag-theme-alpine table-pos"
+              domLayout="autoHeight"
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef"
+              [rowData]="rowData"
+              (gridReady)="onGridReady($event)"
+            ></ag-grid-angular>
+            <ion-button color="success" class="assign-button" (click)="openAssignClient()"
+              >ASSIGN CLIENT</ion-button
+            >
+          </div>
+        </div>
+        <div *ngIf="viewMode == 'audit'">
+          <ag-grid-angular
+            class="ag-theme-alpine table-pos"
+            [colWidth]="316"
+            domLayout="autoHeight"
+            [columnDefs]="auditColumnDefs"
+            [defaultColDef]="defaultColDef"
+            [rowData]="auditData"
+          ></ag-grid-angular>
+        </div>
+      </div>
+    </ion-content>
+  </ion-split-pane>
+</div>

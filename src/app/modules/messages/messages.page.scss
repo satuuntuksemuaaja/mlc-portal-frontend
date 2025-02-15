@@ -1,0 +1,31 @@
+.client-list-panel {
+  --side-max-width: 280px;
+  ion-menu {
+    --border: 1px solid var(--ion-color-light);
+  }
+}
+
+.client-content {
+  padding: 14px;
+}
+
+.sub-row{
+  margin-top: 20px;
+}
+.first-col{
+  padding-left: 20px;
+}
+.send-file-btn{
+  display: flex;
+  align-content: space-between;
+}
+.auto-r-margin{
+  margin-right: auto;
+}
+.view-icon{
+  opacity: 50%;
+  margin-right: 10px;
+}
+.download-icon{
+  opacity: 50%;
+}

@@ -1,0 +1,38 @@
+.menu-toggle {
+  margin: 0px;
+  width: auto;
+  --padding-end: 0px;
+  --padding-start: 18px;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.end-buttons {
+  ion-icon {
+    color: var(--ion-color-light);
+  }
+}
+
+ion-title {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 135%;
+  color: var(--ion-color-light);
+  mix-blend-mode: normal;
+  opacity: 0.87;
+
+  --padding-start: 0px;
+  padding-left: 24px;
+}
+
+.badge {
+  position: absolute;
+  background: var(--ion-color-danger);
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  top: -3px;
+  right: 1px;
+}

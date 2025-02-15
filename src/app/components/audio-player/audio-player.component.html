@@ -1,0 +1,18 @@
+<ion-item-divider>
+  <ion-label class="header-label">{{ filename }}</ion-label>
+  <ion-button
+    color="medium"
+    size="small"
+    fill="outline"
+    (click)="downloadFile()"
+    style="margin-right: 30px"
+    >Download</ion-button
+  >
+  <ion-icon name="close-outline" (click)="close()" class="close"></ion-icon>
+</ion-item-divider>
+<audio *ngIf="!showLoading" controls class="pg-bar">
+  <source [src]="safeAudioSource" type="{{ attachment.mime }}" />
+</audio>
+<div *ngIf="showLoading == true" class="pg-bar">
+  <mlc-loading [text]="'Downloading ' + filename"></mlc-loading>
+</div>

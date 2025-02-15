@@ -1,0 +1,40 @@
+.notifications-wrapper {
+  & .notification-header {
+    font-weight: 700;
+    font-size: 18px;
+    font-family: var(--font-inter);
+    padding: 20px;
+    border-bottom: 1px solid rgb(197, 213, 221);
+    cursor: pointer;
+  }
+
+  & .view-all-option {
+    font-size: 14px;
+    font-family: var(--font-inter);
+    font-weight: 500;
+    color: var(--ion-color-primary);
+    cursor: pointer;
+  }
+
+  & .notification-content {
+    padding: 20px;
+  }
+
+  & .notification-list {
+    margin-top: 20px;
+  }
+  & .notification-item {
+    border: 1px solid rgb(197, 213, 221);
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    ion-label {
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font-inter) !important;
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+}

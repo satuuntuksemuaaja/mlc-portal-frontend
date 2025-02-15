@@ -1,0 +1,37 @@
+<div class="alert-wrapper" [class.error]="type === 'error'">
+  <ion-button class="close-btn" (click)="close()">
+    <ion-icon slot="icon-only" src="assets/icons/close.svg"></ion-icon>
+  </ion-button>
+  <div class="detail-section">
+    <ion-item-divider>
+      <div class="title">{{ title }}</div>
+    </ion-item-divider>
+    <div class="desc">{{ text }}</div>
+  </div>
+  <div class="btn-wrapper" *ngIf="!showCancel">
+    <ion-button
+      (click)="close()"
+      class="theme-button"
+      [color]="type === 'error' ? 'danger' : 'primary'"
+    >
+      OK
+    </ion-button>
+  </div>
+  <div class="btn-wrapper" *ngIf="showCancel">
+    <ion-button
+      (click)="close()"
+      class="theme-button"
+      fill="outline"
+      [color]="type === 'error' ? 'danger' : 'medium'"
+    >
+      Cancel
+    </ion-button>
+    <ion-button
+      (click)="close(title, 'confirm')"
+      class="theme-button"
+      [color]="type === 'error' ? 'danger' : 'primary'"
+    >
+      OK
+    </ion-button>
+  </div>
+</div>

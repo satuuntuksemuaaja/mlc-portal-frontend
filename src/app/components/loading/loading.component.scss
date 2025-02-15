@@ -1,0 +1,21 @@
+.loading-wrapper {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  & ion-spinner {
+    height: 108px;
+    width: 108px;
+  }
+  & .loading-text {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 120%;
+    color: var(--ion-color-dark);
+    margin-top: 16px;
+  }
+}

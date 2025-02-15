@@ -1,0 +1,25 @@
+<ion-header color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" *ngIf="!hideMenuButton">
+      <ion-button class="menu-toggle" id="toggle" (click)="toggleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ title || '' }}</ion-title>
+    <ion-buttons slot="end" class="end-buttons">
+      <ion-button (click)="addClient()">
+        <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+      </ion-button>
+      <!-- <ion-button>
+        <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+      </ion-button> -->
+      <ion-button (click)="openNotificationPopover($event)">
+        <!-- <div class="badge" *ngIf="unreadNotifications > 0"></div> -->
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="isOffline" (click)="openOfflinePopover($event)">
+        <ion-icon style="color: #cc1212" name="cloud-offline-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

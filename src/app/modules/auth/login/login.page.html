@@ -1,0 +1,33 @@
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!showLoading && orgLoaded; else loading">
+    <div class="card-container">
+      <div class="auth-card">
+        <div class="org-logo-wrapper">
+          <img class="org-logo" id="org-logo" (error)="imageError()" [src]="organisation?.logo" />
+        </div>
+        <div class="title">Welcome to My Life Capsule</div>
+        <div class="sub-title">Privacy-first client engagement portal</div>
+        <div class="form-wrapper">
+          <div class="btn-wrapper">
+            <ion-button
+              mode="ios"
+              expand="block"
+              color="primary"
+              type="submit"
+              class="auth-button"
+              (click)="proceedLogin()"
+            >
+              Sign In
+            </ion-button>
+          </div>
+          <div class="auth-option-text">
+            Don't have an account? <span class="bold" (click)="gotoRegister()"> Sign up now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <mlc-loading text="Please wait..."></mlc-loading>
+  </ng-template>
+</ion-content>

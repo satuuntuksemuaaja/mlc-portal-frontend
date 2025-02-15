@@ -1,0 +1,19 @@
+.form-wrapper {
+  max-width: 350px;
+  margin-top: 50px !important;
+  margin: auto;
+}
+.btn-wrapper {
+  margin-top: 24px !important;
+}
+.form-label,
+ion-textarea {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  color: var(--mlc-text);
+}
+ion-textarea {
+  border: 1px solid var(--ion-color-secondary);
+}

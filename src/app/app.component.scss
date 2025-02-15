@@ -1,0 +1,107 @@
+.main-menu-pane {
+  --side-max-width: 180px !important;
+  --side-min-width: 180px !important;
+}
+
+.main-menu {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 8px 2px rgba(0, 0, 0, 0.15);
+  .menu-list {
+    padding: 0px;
+    height: calc(100% - 74px);
+
+    .user-header {
+      & .user-avatar {
+        width: 30px;
+        height: 30px;
+        background: var(--ion-color-dark);
+        margin-right: 8px;
+      }
+
+      & .user-name {
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 135%;
+        color: var(--ion-color-dark-tint);
+      }
+    }
+
+    .menu-item {
+      border-bottom: 1px solid #ececec;
+      padding: 0 10px;
+      &.activated {
+        background: var(--ion-color-light);
+      }
+
+      & .menu-label,
+      & .menu-icon {
+        color: var(--ion-color-dark);
+      }
+
+      & .menu-icon {
+        margin-right: 5px;
+      }
+
+      & .menu-label {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 135%;
+        white-space: unset;
+      }
+    }
+  }
+  &.mat-drawer-opened {
+    & .menu-item {
+      padding: 0 22px !important;
+    }
+    & .menu-header {
+      cursor: pointer;
+      --padding-start: 25px;
+      ion-avatar {
+        margin-right: 8px;
+        margin-left: 0px;
+      }
+      ion-label {
+        display: block;
+      }
+    }
+  }
+}
+
+.menu-header {
+  margin-top: 15px;
+  margin-bottom: 12px;
+  --padding-start: 0px;
+  --ripple-color: transparent;
+  --background-focused: transparent;
+  --background-hover: transparent;
+  cursor: pointer;
+  ion-avatar {
+    height: 30px;
+    width: 30px;
+    margin-left: 13px;
+    margin-right: 0px;
+    // background: var(--ion-color-primary-shade);
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  ion-label {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ion-color-dark);
+    display: none;
+    p {
+      font-size: 12px;
+      color: var(--ion-color-dark);
+      line-height: 135%;
+    }
+  }
+}
+
+.align-logout{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

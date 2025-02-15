@@ -1,0 +1,46 @@
+<ion-item class="client-info-item" lines="none">
+  <!-- <ion-avatar slot="start">
+    <img src="assets/images/person-circle-outline.png" alt="" />
+  </ion-avatar> -->
+  <div class="client-label">
+    <ion-label>{{ client?.name }}</ion-label>
+    <span
+      [ngClass]="{
+        cancel: client?.status == 'cancelled' || client?.status == 'archived',
+        pending: client?.status == 'pending',
+        success: client?.status == 'active'
+      }"
+      >{{ client?.status | titlecase }}</span
+    >
+  </div>
+</ion-item>
+<div class="message-options-btns" *ngIf="displayTabs">
+  <ion-button
+    class="theme-button message-option-btn"
+    (click)="changeView('files')"
+    [class.disabled]="viewMode != 'files'"
+  >
+    Documents
+  </ion-button>
+  <ion-button
+    class="theme-button message-option-btn"
+    (click)="changeView('messages')"
+    [class.disabled]="viewMode != 'messages'"
+  >
+    Messages
+  </ion-button>
+  <!-- <ion-button
+    class="theme-button message-option-btn"
+    (click)="changeView('consent')"
+    [class.disabled]="viewMode != 'consent'"
+  >
+    Consent To Transfer
+  </ion-button> -->
+  <ion-button
+    class="theme-button message-option-btn"
+    (click)="changeView('profile')"
+    [class.disabled]="viewMode != 'profile'"
+  >
+    Profile
+  </ion-button>
+</div>

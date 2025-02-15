@@ -1,0 +1,43 @@
+<ion-content>
+  <div class="content">
+    <div class="add-client-card popup">
+      <div class="header">{{ title | itemtitle }}</div>
+      <form
+        [formGroup]="myForm"
+        class="content"
+        *ngIf="!showLoader; else loading"
+        (ngSubmit)="submit()"
+      >
+        <div class="form-wrapper">
+          <div *ngFor="let Input of fields" class="form-item">
+            <ion-item *ngIf="Input.type == 'text'">
+              <ion-label position="stacked">{{ Input.name }}</ion-label>
+              <ion-input [formControlName]="Input.fieldname"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="Input.type == 'longtext' && Input.fieldname !== 'notes'" class="form-item">
+              <ion-label position="stacked">{{ Input.name }}</ion-label>
+              <ion-textarea
+                [formControlName]="Input.fieldname"
+                [rows]="2"
+                autoGrow="true"
+              ></ion-textarea>
+            </ion-item>
+
+            <ion-item *ngIf="Input.type == 'longtext' && Input.fieldname === 'notes'" class="form-item">
+              <ion-label position="stacked">{{ Input.name }}</ion-label>
+              <ion-textarea style="display: none;"></ion-textarea>
+              <div [innerHtml]="formControls[Input.fieldname]?.value | safeHtml" class="form-item-notes"></div>
+            </ion-item>
+
+          </div>
+        </div>
+        <div class="footer-button-wrapper">
+          <ion-button class="theme-button" (click)="close()"> ok </ion-button>
+        </div>
+      </form>
+      <ng-template #loading>
+        <mlc-loading text="Creating Client"></mlc-loading>
+      </ng-template>
+    </div>
+  </div>
+</ion-content>

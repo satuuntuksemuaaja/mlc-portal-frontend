@@ -1,0 +1,174 @@
+<mlc-crop-and-rotate
+  *ngIf="viewMode == 'editedImg' && !isLoading"
+  (sendImage)="getEditedImage($event)"
+  (cancelEdit)="changeMode(prevMode, true)"
+  style="height: 100%"
+></mlc-crop-and-rotate>
+<div *ngIf="!organization || isLoading == true || !userDetails">
+  <mlc-loading [text]="'Loading'"></mlc-loading>
+</div>
+<div *ngIf="userDetails && userDetails?.me?.role !== 'Administrator'">
+  <mlc-error
+    header="Access Error"
+    text="You don't have permissions to access the administration module."
+  ></mlc-error>
+</div>
+
+<div
+  [ngClass]="{ org_scroll: viewMode == 'organisation' }"
+  *ngIf="organization && !isLoading && userDetails?.me?.role === 'Administrator'"
+>
+  <div class="mlc-navpills" *ngIf="viewMode != 'editedImg'">
+    <ion-button
+      color="primary"
+      (click)="changeMode('organisation')"
+      [ngClass]="{ inactive: viewMode != 'organisation' }"
+      >ORGANISATION</ion-button
+    >
+    <ion-button
+      color="primary"
+      (click)="changeMode('agents')"
+      [ngClass]="{ inactive: viewMode != 'agents' }"
+      >AGENTS</ion-button
+    >
+    <ion-button
+      color="primary"
+      (click)="changeMode('clients')"
+      [ngClass]="{ inactive: viewMode != 'clients' }"
+      >CLIENTS</ion-button
+    >
+    <ion-button
+      color="primary"
+      (click)="changeMode('reporting')"
+      [ngClass]="{ inactive: viewMode != 'reporting' }"
+      >REPORTING</ion-button
+    >
+  </div>
+  <div class="ttl-lbl" *ngIf="viewMode == 'organisation' && organization">
+    Settings
+    <hr style="color: grey" />
+    <form [formGroup]="orgForm" class="form" (ngSubmit)="getData(orgForm?.getRawValue())">
+      <div class="form-wrapper">
+        <ion-item class="form-item">
+          <ion-label position="stacked">Name</ion-label>
+          <ion-input formControlName="name" type="text"></ion-input>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-label position="stacked">Public Website</ion-label>
+          <ion-input formControlName="website" type="text"></ion-input>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-label position="stacked">Default Client Welcome Message</ion-label>
+          <ion-textarea
+            placeholder="Default Client Welcome Message"
+            [autoGrow]="true"
+            rows="3"
+            formControlName="welcomeMessageTemplate"
+          >
+          </ion-textarea>
+        </ion-item>
+        <ion-item class="form-item">
+          <ion-label position="stacked">Primary Domain</ion-label>
+          <ion-input formControlName="domain" type="text"></ion-input>
+        </ion-item>
+        <ion-item class="form-item" lines="none">
+          <ion-label position="stacked">Key</ion-label>
+          <ion-input formControlName="key" type="text"></ion-input>
+        </ion-item>
+      </div>
+      <div class="footer-button-wrapper">
+        <ion-button
+          color="secondary"
+          fill="outline"
+          class="theme-button cancel"
+          (click)="cancelEditing()"
+        >
+          Cancel
+        </ion-button>
+        <ion-button class="theme-button" type="submit" [disabled]="orgForm.invalid">
+          Save
+        </ion-button>
+      </div>
+    </form>
+    <ion-item-divider class="heading">LOGO</ion-item-divider>
+    <div class="upload-image">
+      <ion-avatar *ngIf="profileImage">
+        <img alt="Loading" [src]="profileImage" />
+      </ion-avatar>
+      <ion-button color="success" class="button-pos" (click)="clickImage()">EDIT</ion-button>
+    </div>
+  </div>
+  <div *ngIf="viewMode == 'agents'">
+    <mlc-agents
+      (changeMode)="changeMode('editedImg')"
+      (setAgent)="getCurrentAgent($event)"
+      (setToggleState)="getAgentToggleState($event)"
+      [toggleState]="isAgentToggle"
+      [croppedImg]="agentCroppedImg"
+      [agent]="selectedAgent"
+      [isUpdateImage]="updateImage"
+      [cancelEdit]="cancelEdit"
+    ></mlc-agents>
+  </div>
+  <div *ngIf="viewMode == 'clients'">
+    <mlc-client></mlc-client>
+  </div>
+  <div *ngIf="viewMode == 'reporting'" class="mlc-wideform-panel">
+    <div class="form-margin admin-reporting-help">
+      <ion-label
+        >Export reporting data for analysis in Excel. <br />The <b>from</b> and <b>to</b> dates
+        filter records by the date they were created.</ion-label
+      >
+    </div>
+    <form [formGroup]="reportForm" (ngSubmit)="submitReport()">
+      <ion-item class="drop-down-pos">
+        <ion-label>{{ dropDownLabel }}</ion-label>
+        <ion-select
+          [interfaceOptions]="customActionSheetOptions"
+          interface="alert"
+          [placeholder]="dropDownLabel"
+          formControlName="report"
+        >
+          <ion-select-option value="agents">Agents</ion-select-option>
+          <ion-select-option value="clients">Clients</ion-select-option>
+          <ion-select-option value="clientAgent">Client Agents</ion-select-option>
+          <ion-select-option value="auditLogs">Audit Logs</ion-select-option>
+          <ion-select-option value="clientSubscriptions">Client Subscriptions</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="vertical-form">
+        <ion-item>
+          <ion-label>From</ion-label>
+          <ion-input
+            value="{{ date | date: 'dd-MM-yyyy' }}"
+            id="date"
+            class="ion-text-end"
+            formControlName="from"
+          ></ion-input>
+          <ion-popover trigger="date" [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" (ionChange)="getDate($event)"></ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>To</ion-label>
+          <ion-input
+            value="{{ toDate | date: 'dd-MM-yyyy' }}"
+            id="toDate"
+            class="ion-text-end"
+            formControlName="to"
+          ></ion-input>
+          <ion-popover trigger="toDate" [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" (ionChange)="getToDate($event)"> </ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+        <ion-button color="primary" type="submit" [disabled]="!reportForm.valid">Run</ion-button>
+      </div>
+    </form>
+  </div>
+</div>

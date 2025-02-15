@@ -1,0 +1,21 @@
+.btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10;
+  margin-top: 20px;
+  ion-button {
+    height: 36px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 257%;
+    letter-spacing: 0.84px;
+    text-transform: uppercase;
+    --border-radius: 4px;
+    margin: 0px;
+    margin-left: 10px;
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+}

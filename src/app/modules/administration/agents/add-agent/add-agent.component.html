@@ -1,0 +1,50 @@
+<ion-content scrollY="false">
+  <div class="content">
+    <div class="add-client-card popup">
+      <div class="header">New Agent</div>
+      <form class="content form" [formGroup]="myform" (ngSubmit)="submit()">
+        <div class="form-wrapper">
+          <ion-item class="form-item item-margin">
+            <ion-label position="stacked">Name</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <div class="form-item" style="display: flex; flex-direction: row">
+            <ion-item class="form-item item-margin">
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input formControlName="emailPrefix" type="email"></ion-input>
+            </ion-item>
+            <ng-container>
+              <ion-input [readonly]="true" [value]="org?.org?.primaryDomain"></ion-input>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-label>Role</ion-label>
+            <ion-select
+              [interfaceOptions]="customActionSheetOptions"
+              interface="alert"
+              placeholder="Select One"
+              formControlName="roleId"
+            >
+              <ion-select-option [value]="role.roleId" *ngFor="let role of roles">{{
+                role.role
+              }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="footer-wrapper">
+          <ion-button
+            color="secondary"
+            fill="outline"
+            class="theme-button cancel"
+            (click)="close()"
+          >
+            Cancel
+          </ion-button>
+          <ion-button class="theme-button" type="submit" [disabled]="!myform.valid">
+            ADD AGENT
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

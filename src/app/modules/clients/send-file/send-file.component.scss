@@ -1,0 +1,78 @@
+.content {
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+  height: 100%;
+  margin-top: 0 !important;
+  & .add-client-card {
+    // box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    width: 100%;
+    margin: auto;
+    max-width: 481px;
+  }
+}
+
+.scroll-form{
+  overflow: auto;
+}
+
+.scroll-form::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.form-height{
+  height: 490px;
+}
+
+.form-wrapper {
+  padding-top: 16px;
+  margin-bottom: 25px;
+}
+
+ion-content {
+  // overwrite inline styles
+  height: 100px;
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.file-btns{
+  padding-top: 24px;
+}
+
+.file-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ion-label{
+  max-width: 80%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 10px;
+  width: 93%;
+}
+
+.modal-header{
+  position: fixed;
+  width: 93%;
+}
+
+.close-icon{
+  float: right;
+}
+
+.fixed{
+  position: fixed;
+  width: 91%;
+  top: 40px;
+}

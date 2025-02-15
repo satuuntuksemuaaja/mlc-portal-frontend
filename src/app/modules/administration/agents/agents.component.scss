@@ -1,0 +1,89 @@
+.client-list-panel {
+  --side-max-width: 280px;
+
+  ion-menu {
+    --border: 1px solid var(--ion-color-light);
+  }
+}
+
+.heading-size {
+  font-size: 22px;
+}
+
+.client-content {
+  padding: 14px;
+}
+
+.buttons-position {
+  margin-left: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  color: black;
+  gap: 4px;
+}
+
+.inactive {
+  filter: opacity(50%);
+}
+
+.actions {
+  color: lightgray;
+}
+
+.split-margin {
+  margin-top: 100px;
+}
+
+.table-pos {
+  width: 100%;
+  // height: 100%;
+  margin-left: 16px;
+}
+
+.button-head {
+  // height: 50%;
+  width: 100%;
+  max-width: 950px;
+  // overflow-y: hidden;
+  // overflow-x: hidden;
+}
+
+.upload-image {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+
+  .button-pos {
+    align-self: end;
+  }
+}
+
+.heading {
+  color: #222428;
+  margin-top: 32px;
+}
+
+.assign-button {
+  margin: 24px 0px 0px 20px;
+}
+
+.split-margin {
+  margin-top: 100px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 78%;
+  margin-left: 20px;
+}
+
+.next-btn {
+  --color: white;
+}
+
+.button-color {
+  color: white;
+}
